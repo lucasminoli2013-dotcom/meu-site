@@ -1,9 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
 <title>🇷🇺 ТЁМНАЯ ТРЕВОГА 🇷🇺</title>
 
@@ -21,12 +21,12 @@ html, body {
     font-family: "Courier New", monospace;
 }
 
-/* FUNDO COM CÓDIGOS ROXOS */
+/* FUNDO ROXO */
 #matrix {
     position: fixed;
     inset: 0;
     overflow: hidden;
-    opacity: 0.3;
+    opacity: .28;
 }
 
 .code {
@@ -34,10 +34,13 @@ html, body {
     top: -120%;
     color: #a000ff;
     font-size: 14px;
-    line-height: 24px;
+    line-height: 25px;
     white-space: pre;
     text-shadow: 0 0 8px #a000ff;
-    animation: fall linear infinite;
+
+    animation-name: fall;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
 }
 
 @keyframes fall {
@@ -54,17 +57,20 @@ html, body {
 .dark {
     position: fixed;
     inset: 0;
-    background: radial-gradient(
-        circle,
-        transparent,
-        rgba(0,0,0,.92)
-    );
+    z-index: 2;
+
+    background:
+        radial-gradient(
+            circle,
+            transparent 5%,
+            rgba(0,0,0,.92) 90%
+        );
 }
 
 /* PAINEL */
 .panel {
     position: absolute;
-    z-index: 2;
+    z-index: 5;
 
     width: 88%;
     max-width: 600px;
@@ -74,25 +80,30 @@ html, body {
 
     transform: translate(-50%, -50%);
 
-    padding: 18px;
+    padding: 18px 14px;
 
-    text-align: center;
-
-    background: rgba(5,0,0,.96);
+    background: rgba(3,0,0,.97);
 
     border: 2px solid red;
 
     box-shadow:
         0 0 25px red,
-        0 0 70px rgba(255,0,0,.3);
+        0 0 70px rgba(255,0,0,.25);
+
+    text-align: center;
 }
 
 /* ALERTA */
 .warning {
-    color: red;
+    color: #ff2222;
+
+    font-size: clamp(11px, 3.2vw, 18px);
+
     font-weight: bold;
-    font-size: clamp(11px, 3vw, 18px);
-    animation: blink 1s infinite;
+
+    letter-spacing: 1px;
+
+    animation: blink .9s infinite;
 }
 
 @keyframes blink {
@@ -103,46 +114,60 @@ html, body {
 
 /* TÍTULO */
 h1 {
+    margin: 10px 0 14px;
+
     color: red;
-    font-size: clamp(24px, 7vw, 45px);
+
+    font-size: clamp(22px, 7vw, 45px);
 
     text-shadow:
         0 0 10px red,
         0 0 25px red;
 }
 
-/* TIMER */
+/* TIMER VERDE */
 #timer {
     display: inline-block;
 
-    color: #00ff33;
-    background: black;
+    padding: 2px 13px;
+
+    background: #000;
 
     border: 2px solid #00ff33;
 
-    padding: 5px 15px;
+    color: #00ff33;
 
-    font-size: clamp(55px, 17vw, 100px);
+    font-size: clamp(55px, 17vw, 95px);
+
     font-weight: bold;
 
-    text-shadow: 0 0 20px #00ff33;
-    box-shadow: 0 0 20px #00ff33;
+    letter-spacing: 2px;
+
+    text-shadow:
+        0 0 12px #00ff33,
+        0 0 25px #00ff33;
+
+    box-shadow:
+        0 0 20px rgba(0,255,51,.55);
 }
 
 /* TERMINAL */
 .terminal {
     margin-top: 15px;
+
     padding: 12px;
+
+    background: #010101;
+
+    border: 1px solid #4d0000;
 
     text-align: left;
 
     color: #ff5555;
-    background: black;
 
-    border: 1px solid #550000;
+    font-size: clamp(10px, 2.8vw, 14px);
 
-    font-size: clamp(10px, 3vw, 14px);
-    line-height: 1.8;
+    line-height: 1.85;
 }
 
 .green {
@@ -150,14 +175,17 @@ h1 {
 }
 
 .red {
-    color: red;
+    color: #ff2222;
     font-weight: bold;
 }
 
 /* BARRA */
 .bar {
+    width: 100%;
     height: 7px;
+
     margin-top: 15px;
+
     background: #102000;
 }
 
@@ -168,44 +196,76 @@ h1 {
     background: #00ff33;
 
     box-shadow: 0 0 12px #00ff33;
+
+    transition: width 1s linear;
 }
 
 /* STATUS */
 #status {
-    margin-top: 12px;
+    margin-top: 11px;
 
-    color: red;
+    color: #ff3333;
 
-    font-size: 12px;
+    font-size: clamp(9px, 2.7vw, 13px);
+
     font-weight: bold;
 }
 
-/* TELA FINAL */
-#completed {
-    position: fixed;
-    inset: 0;
+/* VÍDEOS */
+.videos {
+    margin-top: 12px;
 
-    display: none;
+    padding-top: 10px;
 
-    justify-content: center;
-    align-items: center;
+    border-top: 1px solid #440000;
 
-    background: black;
+    color: #b000ff;
 
-    color: #00ff33;
+    font-size: clamp(12px, 3.5vw, 17px);
+
+    font-weight: bold;
+
+    letter-spacing: 2px;
+
+    text-shadow: 0 0 10px #b000ff;
+}
+
+/* BOTÃO DE TELA CHEIA */
+#fullscreenBtn {
+    margin-top: 12px;
+
+    padding: 8px 14px;
+
+    background: #050505;
+
+    border: 1px solid #555;
+
+    color: #aaa;
 
     font-family: "Courier New", monospace;
 
-    font-size: clamp(55px, 18vw, 200px);
-    font-weight: bold;
+    font-size: 11px;
+}
 
-    text-align: center;
+/* TELAS BAIXAS */
+@media (max-height: 650px) {
 
-    text-shadow:
-        0 0 20px #00ff33,
-        0 0 60px #00ff33;
+    .panel {
+        padding: 10px;
+    }
 
-    z-index: 999;
+    h1 {
+        margin: 5px 0 8px;
+    }
+
+    .terminal {
+        margin-top: 8px;
+        line-height: 1.5;
+    }
+
+    .videos {
+        margin-top: 7px;
+    }
 }
 </style>
 </head>
@@ -216,7 +276,7 @@ h1 {
 
 <div class="dark"></div>
 
-<div class="panel" id="panel">
+<div class="panel">
 
     <div class="warning">
         🇷🇺 ⚠ СИСТЕМА УСПЕШНО ВЗЛОМАНА ⚠ 🇷🇺
@@ -237,6 +297,9 @@ h1 {
         &gt; ВЗЛОМ СИСТЕМЫ:
         <span class="green">УСПЕШНО</span><br>
 
+        &gt; МЕСТОПОЛОЖЕНИЕ:
+        <span class="green">ОПРЕДЕЛЕНО</span><br>
+
         &gt; СОСТОЯНИЕ:
         <span class="red">КРИТИЧЕСКОЕ</span>
 
@@ -250,38 +313,49 @@ h1 {
         СОЕДИНЕНИЕ АКТИВНО...
     </div>
 
-</div>
+    <div class="videos">
+        X ВИДЕОЗАПИСЕЙ
+    </div>
 
-<div id="completed">
-    ЗАВЕРШЕНО
+    <button id="fullscreenBtn">
+        ПОЛНЫЙ ЭКРАН
+    </button>
+
 </div>
 
 <script>
 
-/* CÓDIGOS ROXOS */
+/* =========================
+   NÚMEROS ROXOS DO FUNDO
+========================= */
 
-const matrix = document.getElementById("matrix");
+const matrix =
+    document.getElementById("matrix");
 
-const chars = "010101 110010 001101 101010 ОШИБКА 404";
+const chars =
+    "010101 110010 001101 101010 001100 404 ERROR";
 
 for (let i = 0; i < 12; i++) {
 
-    const code = document.createElement("div");
+    const code =
+        document.createElement("div");
 
     code.className = "code";
 
     code.style.left =
         Math.random() * 100 + "%";
 
+    /* NÚMEROS BEM LENTOS */
+
     code.style.animationDuration =
-        (30 + Math.random() * 15) + "s";
+        (32 + Math.random() * 18) + "s";
 
     code.style.animationDelay =
-        Math.random() * 10 + "s";
+        Math.random() * 15 + "s";
 
     let text = "";
 
-    for (let j = 0; j < 70; j++) {
+    for (let j = 0; j < 75; j++) {
         text += chars + "\n";
     }
 
@@ -291,17 +365,25 @@ for (let i = 0; i < 12; i++) {
 }
 
 
-/* TIMER DE 5 MINUTOS */
+/* =========================
+   TIMER — 5 MINUTOS
+========================= */
 
 let remaining = 5 * 60;
 
-const timer = document.getElementById("timer");
-const progress = document.getElementById("progress");
+const timer =
+    document.getElementById("timer");
 
-const timerInterval = setInterval(() => {
+const progress =
+    document.getElementById("progress");
 
-    const minutes = Math.floor(remaining / 60);
-    const seconds = remaining % 60;
+function updateTimer() {
+
+    const minutes =
+        Math.floor(remaining / 60);
+
+    const seconds =
+        remaining % 60;
 
     timer.textContent =
         String(minutes).padStart(2, "0") +
@@ -311,43 +393,75 @@ const timerInterval = setInterval(() => {
     progress.style.width =
         (remaining / 300 * 100) + "%";
 
-    if (remaining <= 0) {
-
-        clearInterval(timerInterval);
-
-        document.getElementById("panel").style.display = "none";
-
-        document.getElementById("matrix").style.display = "none";
-
-        document.getElementById("completed").style.display = "flex";
-
-        return;
+    if (remaining > 0) {
+        remaining--;
     }
+}
 
-    remaining--;
+updateTimer();
 
-}, 1000);
+setInterval(updateTimer, 1000);
 
 
-/* MENSAGENS */
+/* =========================
+   MENSAGENS
+========================= */
 
 const messages = [
+
     "СОЕДИНЕНИЕ АКТИВНО...",
-    "ОБРАБОТКА ДАННЫХ...",
+
     "ПРОВЕРКА СИСТЕМЫ...",
-    "ДОСТУП РАЗРЕШЁН..."
+
+    "ОБРАБОТКА ДАННЫХ...",
+
+    "ПРОТОКОЛ БЕЗОПАСНОСТИ АКТИВЕН...",
+
+    "ДОСТУП РАЗРЕШЁН...",
+
+    "СОСТОЯНИЕ: КРИТИЧЕСКОЕ..."
+
 ];
 
 let index = 0;
 
 setInterval(() => {
 
-    document.getElementById("status").textContent =
-        messages[index];
+    document.getElementById("status")
+        .textContent = messages[index];
 
-    index = (index + 1) % messages.length;
+    index++;
+
+    if (index >= messages.length) {
+        index = 0;
+    }
 
 }, 2200);
+
+
+/* =========================
+   TELA CHEIA
+========================= */
+
+const fullscreenBtn =
+    document.getElementById("fullscreenBtn");
+
+fullscreenBtn.addEventListener("click", () => {
+
+    const page = document.documentElement;
+
+    if (page.requestFullscreen) {
+
+        page.requestFullscreen().catch(() => {});
+
+    } else if (page.webkitRequestFullscreen) {
+
+        page.webkitRequestFullscreen();
+
+    }
+
+    fullscreenBtn.style.display = "none";
+});
 
 </script>
 
