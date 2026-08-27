@@ -3,136 +3,225 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SISTEMA COMPROMETIDO</title>
+<title>System Alert</title>
 
 <style>
-    * {
-        box-sizing: border-box;
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: #030000;
+    color: #ff1111;
+    font-family: "Courier New", monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* CÓDIGOS NO FUNDO */
+#background {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    z-index: 0;
+    opacity: 0.22;
+    color: #ff0000;
+    font-size: 14px;
+    line-height: 1.5;
+    white-space: pre;
+}
+
+.code {
+    position: absolute;
+    top: -100%;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    from {
+        transform: translateY(-100%);
+    }
+    to {
+        transform: translateY(200vh);
+    }
+}
+
+/* CONTEÚDO PRINCIPAL */
+.container {
+    position: relative;
+    z-index: 2;
+    width: 92%;
+    max-width: 850px;
+    padding: 40px;
+    text-align: center;
+    background: rgba(10, 0, 0, 0.94);
+    border: 2px solid #ff0000;
+    box-shadow:
+        0 0 20px #ff0000,
+        0 0 60px rgba(255, 0, 0, 0.35);
+}
+
+h1 {
+    margin: 0;
+    font-size: clamp(38px, 8vw, 75px);
+    color: #ff0000;
+    text-shadow:
+        0 0 8px #ff0000,
+        0 0 25px #ff0000;
+    animation: glitch 0.8s infinite;
+}
+
+.subtitle {
+    margin-top: 15px;
+    color: #ff5555;
+    font-size: 18px;
+    letter-spacing: 3px;
+}
+
+#timer {
+    margin: 30px 0;
+    font-size: clamp(70px, 15vw, 130px);
+    font-weight: bold;
+    color: #ff0000;
+    text-shadow: 0 0 30px #ff0000;
+}
+
+.terminal {
+    text-align: left;
+    padding: 20px;
+    background: #070000;
+    border: 1px solid #770000;
+    color: #ff3333;
+    line-height: 1.8;
+}
+
+.danger {
+    color: #ff0000;
+    font-weight: bold;
+}
+
+.simulation {
+    margin-top: 20px;
+    color: #777;
+    font-size: 13px;
+}
+
+@keyframes glitch {
+    0%, 100% {
+        transform: translate(0);
     }
 
-    body {
-        margin: 0;
-        min-height: 100vh;
-        background: #000;
-        color: #00ff41;
-        font-family: "Courier New", monospace;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
+    25% {
+        transform: translate(-2px, 1px);
     }
 
-    .box {
-        width: 90%;
-        max-width: 800px;
-        padding: 40px;
-        border: 2px solid #00ff41;
-        box-shadow: 0 0 30px #00ff41;
-        background: rgba(0, 20, 0, 0.9);
+    50% {
+        transform: translate(2px, -1px);
     }
 
-    .warning {
-        color: #ff2222;
-        text-shadow: 0 0 15px red;
-        font-size: clamp(35px, 7vw, 70px);
-        margin: 0;
-        animation: blink 0.8s infinite;
+    75% {
+        transform: translate(-1px, 2px);
     }
-
-    .subtitle {
-        font-size: 20px;
-        margin: 20px 0;
-    }
-
-    #timer {
-        font-size: clamp(60px, 12vw, 110px);
-        font-weight: bold;
-        color: #ff2222;
-        text-shadow: 0 0 20px red;
-        margin: 30px 0;
-    }
-
-    .terminal {
-        text-align: left;
-        padding: 20px;
-        border: 1px solid #00ff41;
-        margin-top: 20px;
-        line-height: 1.8;
-    }
-
-    .fake {
-        color: #00ff41;
-    }
-
-    button {
-        margin-top: 25px;
-        padding: 12px 25px;
-        background: transparent;
-        border: 1px solid #00ff41;
-        color: #00ff41;
-        font-family: monospace;
-        cursor: pointer;
-    }
-
-    button:hover {
-        background: #00ff41;
-        color: #000;
-    }
-
-    @keyframes blink {
-        50% {
-            opacity: 0.35;
-        }
-    }
+}
 </style>
 </head>
 
 <body>
 
-<div class="box">
+<!-- CÓDIGOS DECORATIVOS -->
+<div id="background"></div>
 
-    <h1 class="warning">⚠ VOCÊ FOI HACKEADO ⚠</h1>
+<div class="container">
 
-    <p class="subtitle">
-        SISTEMA COMPROMETIDO
-    </p>
+    <h1>⚠ SYSTEM ALERT ⚠</h1>
+
+    <div class="subtitle">
+        ACESSO NÃO AUTORIZADO DETECTADO
+    </div>
 
     <div id="timer">20:00</div>
 
     <div class="terminal">
-        > Inicializando sistema...<br>
-        > Verificando arquivos...<br>
-        > Conexão estabelecida...<br>
-        > <span class="fake">SIMULAÇÃO ATIVADA</span><br>
-        > Nenhum arquivo está sendo alterado.
+        &gt; SYSTEM STATUS: <span class="danger">WARNING</span><br>
+        &gt; SECURITY CHECK: FAILED<br>
+        &gt; CONNECTION: <span class="danger">UNSTABLE</span><br>
+        &gt; ENCRYPTION: ACTIVE<br>
+        &gt; COUNTDOWN: <span class="danger">RUNNING</span>
     </div>
 
-    <button onclick="location.reload()">
-        REINICIAR SIMULAÇÃO
-    </button>
+    <div class="simulation">
+        ⚠ SIMULAÇÃO — nenhum arquivo ou dispositivo está sendo alterado.
+    </div>
 
 </div>
 
 <script>
-    let segundos = 20 * 60;
 
-    function atualizarTimer() {
-        let minutos = Math.floor(segundos / 60);
-        let seg = segundos % 60;
+/* GERAR CÓDIGOS NO FUNDO */
+const background = document.getElementById("background");
 
-        document.getElementById("timer").textContent =
-            String(minutos).padStart(2, "0") + ":" +
-            String(seg).padStart(2, "0");
+const caracteres =
+"01ABCDEF0123456789 SYSTEM ERROR ACCESS DENIED 01010101";
 
-        if (segundos > 0) {
-            segundos--;
-        } else {
-            document.getElementById("timer").textContent = "00:00";
+for (let i = 0; i < 18; i++) {
+
+    const code = document.createElement("div");
+
+    code.className = "code";
+
+    code.style.left = Math.random() * 100 + "%";
+
+    code.style.animationDuration =
+        (5 + Math.random() * 10) + "s";
+
+    code.style.animationDelay =
+        Math.random() * 8 + "s";
+
+    let texto = "";
+
+    for (let j = 0; j < 80; j++) {
+        texto += caracteres
+            .charAt(Math.floor(Math.random() * caracteres.length));
+
+        if (j % 5 === 0) {
+            texto += "\n";
         }
     }
 
-    atualizarTimer();
-    setInterval(atualizarTimer, 1000);
+    code.textContent = texto;
+
+    background.appendChild(code);
+}
+
+
+/* TIMER DE 20 MINUTOS */
+
+let segundos = 20 * 60;
+
+function atualizar() {
+
+    const minutos = Math.floor(segundos / 60);
+
+    const segundosRestantes = segundos % 60;
+
+    document.getElementById("timer").textContent =
+        String(minutos).padStart(2, "0") +
+        ":" +
+        String(segundosRestantes).padStart(2, "0");
+
+    if (segundos > 0) {
+        segundos--;
+    }
+}
+
+atualizar();
+
+setInterval(atualizar, 1000);
+
 </script>
 
 </body>
