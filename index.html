@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>SECURITY ALERT</title>
 
 <style>
@@ -19,33 +20,38 @@ body {
     font-family: "Courier New", monospace;
 }
 
-/* FUNDO */
-#codigo {
+/* FUNDO VERDE */
+#fundo {
     position: fixed;
     inset: 0;
     overflow: hidden;
     z-index: 1;
 }
 
-.coluna {
+.codigo {
     position: absolute;
-    top: -100%;
-    color: #00ff22;
-    font-size: 25px;
-    line-height: 30px;
+    top: -120%;
+
+    color: #00ff00;
+    font-size: 24px;
     font-weight: bold;
-    text-shadow: 0 0 8px #00ff22;
+    line-height: 30px;
+
+    text-shadow: 0 0 7px #00ff00;
+
     white-space: pre;
-    animation: cair linear infinite;
+
+    /* VELOCIDADE NORMAL */
+    animation: queda 14s linear infinite;
 }
 
-@keyframes cair {
+@keyframes queda {
     from {
         transform: translateY(0);
     }
 
     to {
-        transform: translateY(220vh);
+        transform: translateY(230vh);
     }
 }
 
@@ -54,23 +60,23 @@ body {
     position: absolute;
     z-index: 10;
 
-    width: 90%;
-    max-width: 850px;
-
     left: 50%;
     top: 50%;
 
     transform: translate(-50%, -50%);
 
+    width: 90%;
+    max-width: 850px;
+
     padding: 35px;
 
     background: rgba(0, 0, 0, 0.97);
 
-    border: 2px solid red;
+    border: 2px solid #ff0000;
 
     box-shadow:
-        0 0 25px red,
-        0 0 80px rgba(255, 0, 0, 0.35);
+        0 0 25px #ff0000,
+        0 0 70px rgba(255, 0, 0, 0.35);
 
     text-align: center;
 }
@@ -79,42 +85,41 @@ body {
 h1 {
     margin: 0;
 
-    color: red;
+    color: #ff0000;
 
-    font-size: clamp(35px, 7vw, 70px);
+    font-size: clamp(35px, 7vw, 65px);
 
     text-shadow:
-        0 0 10px red,
-        0 0 30px red;
+        0 0 10px #ff0000,
+        0 0 30px #ff0000;
 
-    animation: glitch 0.7s infinite;
+    animation: glitch 0.8s infinite;
 }
 
 @keyframes glitch {
-
     0%, 100% {
         transform: translate(0);
     }
 
     25% {
-        transform: translate(-3px, 2px);
+        transform: translate(-3px, 1px);
     }
 
     50% {
-        transform: translate(3px, -2px);
+        transform: translate(3px, -1px);
     }
 
     75% {
-        transform: translate(-2px, 1px);
+        transform: translate(-1px, 2px);
     }
 }
 
 .subtitulo {
     margin-top: 15px;
 
-    color: #ff5555;
+    color: #ff4444;
 
-    font-size: 17px;
+    font-size: 18px;
 
     letter-spacing: 3px;
 }
@@ -124,22 +129,20 @@ h1 {
     display: inline-block;
 
     margin: 30px 0;
-
     padding: 8px 25px;
 
-    color: red;
-
+    color: #ff0000;
     background: #000;
 
-    border: 2px solid red;
+    border: 2px solid #ff0000;
 
     font-size: clamp(70px, 15vw, 120px);
 
     font-weight: bold;
 
-    text-shadow: 0 0 25px red;
+    text-shadow: 0 0 30px #ff0000;
 
-    box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0.5);
 }
 
 /* TERMINAL */
@@ -148,22 +151,22 @@ h1 {
 
     text-align: left;
 
-    color: #ff5555;
-
     background: #030000;
 
     border: 1px solid #550000;
+
+    color: #ff5555;
 
     line-height: 1.8;
 }
 
 .vermelho {
-    color: red;
+    color: #ff0000;
     font-weight: bold;
 }
 
 .verde {
-    color: #00ff22;
+    color: #00ff00;
     font-weight: bold;
 }
 
@@ -174,17 +177,15 @@ h1 {
     margin-top: 20px;
 
     background: #250000;
-
-    border: 1px solid #550000;
 }
 
 #progresso {
     width: 100%;
     height: 100%;
 
-    background: red;
+    background: #ff0000;
 
-    box-shadow: 0 0 15px red;
+    box-shadow: 0 0 15px #ff0000;
 
     transition: width 1s linear;
 }
@@ -193,8 +194,10 @@ h1 {
 
 <body>
 
-<div id="codigo"></div>
+<!-- CÓDIGOS DO FUNDO -->
+<div id="fundo"></div>
 
+<!-- PAINEL -->
 <div class="painel">
 
     <h1>⚠ SYSTEM ALERT ⚠</h1>
@@ -203,9 +206,8 @@ h1 {
         UNAUTHORIZED ACCESS DETECTED
     </div>
 
-    <div id="timer">
-        20:00
-    </div>
+    <!-- 20 MINUTOS -->
+    <div id="timer">20:00</div>
 
     <div class="terminal">
 
@@ -234,54 +236,60 @@ h1 {
 
 <script>
 
-/* CÓDIGOS VERDES 2× */
+/* =========================
+   CÓDIGOS DO FUNDO
+   ========================= */
 
-const fundo = document.getElementById("codigo");
+const fundo = document.getElementById("fundo");
 
 const caracteres =
-"010101 110010 001101 ERROR 404 010101 SYSTEM 101010";
+"010101 110010 001101 101010 010011 ERROR 404 SYSTEM";
 
-for (let i = 0; i < 18; i++) {
+for (let i = 0; i < 16; i++) {
 
-    const coluna = document.createElement("div");
+    const codigo = document.createElement("div");
 
-    coluna.className = "coluna";
+    codigo.className = "codigo";
 
-    coluna.style.left =
+    codigo.style.left =
         Math.random() * 100 + "%";
 
-    /* 2× MAIS RÁPIDO */
-coluna.style.animationDuration =
-    (6 + Math.random() * 8) + "s";
+    /* VELOCIDADES LEVEMENTE DIFERENTES */
+    codigo.style.animationDuration =
+        (12 + Math.random() * 6) + "s";
 
-    coluna.style.animationDelay =
-        Math.random() * 5 + "s";
+    codigo.style.animationDelay =
+        Math.random() * 10 + "s";
 
     let texto = "";
 
-    for (let j = 0; j < 70; j++) {
+    for (let j = 0; j < 65; j++) {
         texto += caracteres + "\n";
     }
 
-    coluna.textContent = texto;
+    codigo.textContent = texto;
 
-    fundo.appendChild(coluna);
+    fundo.appendChild(codigo);
 }
 
 
-/* TIMER */
+/* =========================
+   TIMER 20 MINUTOS
+   VELOCIDADE 2×
+   ========================= */
 
 const tempoTotal = 20 * 60;
 
 let tempo = tempoTotal;
 
-const timer = document.getElementById("timer");
+const timer =
+    document.getElementById("timer");
 
 const progresso =
     document.getElementById("progresso");
 
 
-function atualizar() {
+function atualizarTimer() {
 
     const minutos =
         Math.floor(tempo / 60);
@@ -302,20 +310,17 @@ function atualizar() {
         porcentagem + "%";
 
 
-    /* 2× DE VELOCIDADE */
-
+    /* 2× */
     if (tempo > 0) {
         tempo -= 2;
     }
-
 }
 
 
 /* COMEÇA EM 20:00 */
+atualizarTimer();
 
-atualizar();
-
-setInterval(atualizar, 1000);
+setInterval(atualizarTimer, 1000);
 
 </script>
 
