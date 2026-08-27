@@ -3,159 +3,173 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>SECURITY ALERT</title>
 
 <style>
-* {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-    min-height: 100vh;
-    overflow: hidden;
-    background: #020000;
-    color: #ff2020;
-    font-family: "Courier New", monospace;
-}
-
-/* CÓDIGOS NO FUNDO */
-#matrix {
-    position: fixed;
-    inset: 0;
-    overflow: hidden;
-    z-index: 0;
-    opacity: .25;
-}
-
-.column {
-    position: absolute;
-    top: -100%;
-    color: #ff0000;
-    font-size: 14px;
-    line-height: 1.4;
-    white-space: pre;
-    animation: fall linear infinite;
-}
-
-@keyframes fall {
-    from {
-        transform: translateY(-100%);
+    * {
+        box-sizing: border-box;
     }
 
-    to {
-        transform: translateY(220vh);
-    }
-}
-
-/* EFEITO DE VERMELHO NA TELA */
-body::after {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 1;
-    box-shadow: inset 0 0 120px rgba(255, 0, 0, .35);
-}
-
-/* PAINEL */
-.container {
-    position: relative;
-    z-index: 2;
-    width: 90%;
-    max-width: 850px;
-    margin: auto;
-    top: 50%;
-    transform: translateY(-50%);
-    padding: 35px;
-    text-align: center;
-
-    background: rgba(5, 0, 0, .94);
-
-    border: 2px solid #ff0000;
-
-    box-shadow:
-        0 0 20px #ff0000,
-        0 0 60px rgba(255, 0, 0, .25);
-}
-
-h1 {
-    margin: 0;
-    font-size: clamp(35px, 7vw, 70px);
-    color: #ff0000;
-    text-shadow: 0 0 25px #ff0000;
-    animation: glitch .8s infinite;
-}
-
-@keyframes glitch {
-    0%, 100% {
-        transform: translate(0);
+    html, body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
     }
 
-    25% {
-        transform: translate(-2px, 1px);
+    body {
+        background: #050000;
+        color: #ff2222;
+        font-family: "Courier New", monospace;
+        overflow: hidden;
     }
 
-    50% {
-        transform: translate(2px, -1px);
+    /* CÓDIGOS DO FUNDO */
+    #background {
+        position: fixed;
+        inset: 0;
+        overflow: hidden;
+        z-index: 1;
+        opacity: 0.25;
     }
 
-    75% {
-        transform: translate(-1px, 2px);
+    .code {
+        position: absolute;
+        top: -100%;
+        color: #ff0000;
+        font-size: 14px;
+        line-height: 20px;
+        white-space: pre;
+        animation: queda linear infinite;
     }
-}
 
-.subtitle {
-    margin-top: 15px;
-    color: #ff5555;
-    font-size: 17px;
-    letter-spacing: 3px;
-}
+    @keyframes queda {
+        from {
+            transform: translateY(0);
+        }
 
-#timer {
-    margin: 25px 0;
-    font-size: clamp(65px, 14vw, 120px);
-    font-weight: bold;
-    color: #ff0000;
-    text-shadow: 0 0 30px #ff0000;
-}
+        to {
+            transform: translateY(220vh);
+        }
+    }
 
-.terminal {
-    padding: 20px;
-    text-align: left;
-    background: #050000;
-    border: 1px solid #660000;
-    line-height: 1.8;
-    color: #ff4444;
-}
+    /* PAINEL CENTRAL */
+    .box {
+        position: absolute;
+        z-index: 5;
 
-.red {
-    color: #ff0000;
-    font-weight: bold;
-}
+        width: 90%;
+        max-width: 800px;
 
-.progress {
-    height: 8px;
-    margin-top: 20px;
-    background: #220000;
-    overflow: hidden;
-}
+        left: 50%;
+        top: 50%;
 
-.bar {
-    height: 100%;
-    width: 100%;
-    background: #ff0000;
-    box-shadow: 0 0 15px #ff0000;
-    transition: width 1s linear;
-}
+        transform: translate(-50%, -50%);
+
+        padding: 35px;
+
+        background: rgba(5, 0, 0, 0.95);
+
+        border: 2px solid #ff0000;
+
+        box-shadow:
+            0 0 20px #ff0000,
+            0 0 50px rgba(255, 0, 0, 0.4);
+
+        text-align: center;
+    }
+
+    h1 {
+        margin: 0;
+
+        font-size: clamp(32px, 7vw, 65px);
+
+        color: #ff0000;
+
+        text-shadow: 0 0 20px #ff0000;
+
+        animation: piscar 1s infinite;
+    }
+
+    @keyframes piscar {
+        50% {
+            opacity: 0.6;
+        }
+    }
+
+    .subtitle {
+        margin-top: 15px;
+
+        font-size: 17px;
+
+        letter-spacing: 3px;
+
+        color: #ff5555;
+    }
+
+    /* TIMER */
+    #timer {
+        margin: 30px 0;
+
+        font-size: clamp(65px, 14vw, 110px);
+
+        font-weight: bold;
+
+        color: #ff0000;
+
+        text-shadow: 0 0 25px #ff0000;
+    }
+
+    /* TERMINAL */
+    .terminal {
+        padding: 20px;
+
+        text-align: left;
+
+        background: #020000;
+
+        border: 1px solid #660000;
+
+        line-height: 1.8;
+
+        color: #ff5555;
+    }
+
+    .red {
+        color: #ff0000;
+        font-weight: bold;
+    }
+
+    /* BARRA */
+    .progress {
+        width: 100%;
+        height: 8px;
+
+        margin-top: 20px;
+
+        background: #250000;
+    }
+
+    #bar {
+        width: 100%;
+        height: 100%;
+
+        background: #ff0000;
+
+        box-shadow: 0 0 15px #ff0000;
+
+        transition: width 1s linear;
+    }
 </style>
 </head>
 
 <body>
 
-<div id="matrix"></div>
+<!-- FUNDO -->
+<div id="background"></div>
 
-<div class="container">
+<!-- PAINEL -->
+<div class="box">
 
     <h1>⚠ SYSTEM ALERT ⚠</h1>
 
@@ -163,18 +177,20 @@ h1 {
         SECURITY WARNING
     </div>
 
-    <div id="timer">20:00</div>
+    <div id="timer">
+        20:00
+    </div>
 
     <div class="terminal">
 
-        &gt; CONNECTION:
-        <span class="red">ACTIVE</span><br>
+        &gt; SYSTEM STATUS:
+        <span class="red">WARNING</span><br>
 
         &gt; SECURITY LEVEL:
         <span class="red">CRITICAL</span><br>
 
-        &gt; SYSTEM STATUS:
-        <span class="red">WARNING</span><br>
+        &gt; CONNECTION:
+        <span class="red">ACTIVE</span><br>
 
         &gt; COUNTDOWN:
         <span class="red">RUNNING</span>
@@ -182,86 +198,93 @@ h1 {
     </div>
 
     <div class="progress">
-        <div class="bar" id="bar"></div>
+        <div id="bar"></div>
     </div>
 
 </div>
 
 <script>
 
-/* CÓDIGOS DESCENDO NO FUNDO */
+    /* CRIAR CÓDIGOS NO FUNDO */
 
-const matrix = document.getElementById("matrix");
+    const background = document.getElementById("background");
 
-const chars =
-"0101010101010101 ERROR SYSTEM ACCESS 404 00110101 WARNING";
+    const characters =
+        "01010101 11001010 ERROR 404 SYSTEM WARNING ACCESS 00110101";
 
-for (let i = 0; i < 25; i++) {
+    for (let i = 0; i < 20; i++) {
 
-    const column = document.createElement("div");
+        const code = document.createElement("div");
 
-    column.className = "column";
+        code.className = "code";
 
-    column.style.left =
-        Math.random() * 100 + "%";
+        code.style.left =
+            Math.random() * 100 + "%";
 
-    column.style.animationDuration =
-        (5 + Math.random() * 10) + "s";
+        code.style.animationDuration =
+            (6 + Math.random() * 8) + "s";
 
-    column.style.animationDelay =
-        Math.random() * 8 + "s";
+        code.style.animationDelay =
+            Math.random() * 8 + "s";
 
-    let text = "";
+        let text = "";
 
-    for (let j = 0; j < 80; j++) {
+        for (let j = 0; j < 60; j++) {
 
-        text += chars.charAt(
-            Math.floor(Math.random() * chars.length)
-        );
+            text += characters + "\n";
 
-        text += "\n";
+        }
+
+        code.textContent = text;
+
+        background.appendChild(code);
     }
 
-    column.textContent = text;
 
-    matrix.appendChild(column);
-}
+    /* TIMER */
+
+    const totalTime = 20 * 60;
+
+    let timeLeft = totalTime;
+
+    const timer = document.getElementById("timer");
+
+    const bar = document.getElementById("bar");
 
 
-/* CONTADOR DE 20 MINUTOS */
+    function updateTimer() {
 
-const total = 20 * 60;
+        const minutes =
+            Math.floor(timeLeft / 60);
 
-let time = total;
+        const seconds =
+            timeLeft % 60;
 
-function updateTimer() {
+        timer.textContent =
+            String(minutes).padStart(2, "0") +
+            ":" +
+            String(seconds).padStart(2, "0");
 
-    const minutes = Math.floor(time / 60);
 
-    const seconds = time % 60;
+        const percentage =
+            (timeLeft / totalTime) * 100;
 
-    document.getElementById("timer").textContent =
-        String(minutes).padStart(2, "0") +
-        ":" +
-        String(seconds).padStart(2, "0");
+        bar.style.width =
+            percentage + "%";
 
-    const percentage =
-        (time / total) * 100;
 
-    document.getElementById("bar").style.width =
-        percentage + "%";
+        if (timeLeft > 0) {
 
-    if (time > 0) {
-        time--;
-    } else {
-        document.getElementById("timer").textContent =
-            "00:00";
+            timeLeft--;
+
+        }
+
     }
-}
 
-updateTimer();
 
-setInterval(updateTimer, 1000);
+    updateTimer();
+
+    setInterval(updateTimer, 1000);
 
 </script>
 
