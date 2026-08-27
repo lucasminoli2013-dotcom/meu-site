@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>SECURITY BREACH</title>
+<title>SECURITY ALERT</title>
 
 <style>
 * {
@@ -16,98 +15,53 @@ body {
     min-height: 100vh;
     overflow: hidden;
     background: #020000;
-    color: #ff0000;
+    color: #ff2020;
     font-family: "Courier New", monospace;
 }
 
-/* FUNDO COM CÓDIGOS */
-#codes {
+/* CÓDIGOS NO FUNDO */
+#matrix {
     position: fixed;
     inset: 0;
-    z-index: 0;
     overflow: hidden;
-    opacity: .3;
+    z-index: 0;
+    opacity: .25;
 }
 
-.code {
+.column {
     position: absolute;
-    top: -120%;
+    top: -100%;
     color: #ff0000;
-    font-size: 13px;
+    font-size: 14px;
+    line-height: 1.4;
     white-space: pre;
-    animation: cair linear infinite;
+    animation: fall linear infinite;
 }
 
-@keyframes cair {
+@keyframes fall {
+    from {
+        transform: translateY(-100%);
+    }
+
     to {
         transform: translateY(220vh);
     }
 }
 
-/* MÁSCARA */
-.mask {
+/* EFEITO DE VERMELHO NA TELA */
+body::after {
+    content: "";
     position: fixed;
+    inset: 0;
+    pointer-events: none;
     z-index: 1;
-    width: 320px;
-    height: 390px;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    opacity: .18;
-}
-
-.face {
-    position: absolute;
-    inset: 20px;
-    background: #080000;
-    border: 5px solid #ff0000;
-    border-radius: 45% 45% 50% 50%;
-    box-shadow: 0 0 40px #ff0000;
-}
-
-.eye {
-    position: absolute;
-    top: 105px;
-    width: 85px;
-    height: 35px;
-    background: #ff0000;
-    box-shadow: 0 0 25px #ff0000;
-    transform: rotate(-12deg);
-}
-
-.eye.left {
-    left: 40px;
-}
-
-.eye.right {
-    right: 40px;
-    transform: rotate(12deg);
-}
-
-.nose {
-    position: absolute;
-    top: 145px;
-    left: 135px;
-    width: 45px;
-    height: 70px;
-    border-left: 5px solid #ff0000;
-    border-right: 5px solid #ff0000;
-}
-
-.mouth {
-    position: absolute;
-    bottom: 70px;
-    left: 65px;
-    width: 150px;
-    height: 35px;
-    border-bottom: 7px solid #ff0000;
-    border-radius: 50%;
+    box-shadow: inset 0 0 120px rgba(255, 0, 0, .35);
 }
 
 /* PAINEL */
 .container {
     position: relative;
-    z-index: 3;
+    z-index: 2;
     width: 90%;
     max-width: 850px;
     margin: auto;
@@ -115,155 +69,199 @@ body {
     transform: translateY(-50%);
     padding: 35px;
     text-align: center;
-    background: rgba(0,0,0,.88);
+
+    background: rgba(5, 0, 0, .94);
+
     border: 2px solid #ff0000;
-    box-shadow: 0 0 35px #ff0000;
+
+    box-shadow:
+        0 0 20px #ff0000,
+        0 0 60px rgba(255, 0, 0, .25);
 }
 
 h1 {
     margin: 0;
     font-size: clamp(35px, 7vw, 70px);
-    text-shadow: 0 0 20px red;
-    animation: piscar .7s infinite;
+    color: #ff0000;
+    text-shadow: 0 0 25px #ff0000;
+    animation: glitch .8s infinite;
 }
 
-@keyframes piscar {
+@keyframes glitch {
+    0%, 100% {
+        transform: translate(0);
+    }
+
+    25% {
+        transform: translate(-2px, 1px);
+    }
+
     50% {
-        opacity: .45;
+        transform: translate(2px, -1px);
+    }
+
+    75% {
+        transform: translate(-1px, 2px);
     }
 }
 
 .subtitle {
     margin-top: 15px;
-    font-size: 18px;
+    color: #ff5555;
+    font-size: 17px;
     letter-spacing: 3px;
 }
 
 #timer {
     margin: 25px 0;
-    font-size: clamp(65px, 13vw, 120px);
+    font-size: clamp(65px, 14vw, 120px);
     font-weight: bold;
-    text-shadow: 0 0 30px red;
+    color: #ff0000;
+    text-shadow: 0 0 30px #ff0000;
 }
 
 .terminal {
+    padding: 20px;
     text-align: left;
-    padding: 18px;
-    border: 1px solid #770000;
     background: #050000;
+    border: 1px solid #660000;
     line-height: 1.8;
+    color: #ff4444;
 }
 
-.danger {
+.red {
     color: #ff0000;
     font-weight: bold;
+}
+
+.progress {
+    height: 8px;
+    margin-top: 20px;
+    background: #220000;
+    overflow: hidden;
+}
+
+.bar {
+    height: 100%;
+    width: 100%;
+    background: #ff0000;
+    box-shadow: 0 0 15px #ff0000;
+    transition: width 1s linear;
 }
 </style>
 </head>
 
 <body>
 
-<div id="codes"></div>
-
-<!-- MÁSCARA DE HACKER -->
-<div class="mask">
-    <div class="face"></div>
-    <div class="eye left"></div>
-    <div class="eye right"></div>
-    <div class="nose"></div>
-    <div class="mouth"></div>
-</div>
+<div id="matrix"></div>
 
 <div class="container">
 
-    <h1>⚠ SYSTEM BREACH ⚠</h1>
+    <h1>⚠ SYSTEM ALERT ⚠</h1>
 
     <div class="subtitle">
-        ACESSO NÃO AUTORIZADO DETECTADO
+        SECURITY WARNING
     </div>
 
     <div id="timer">20:00</div>
 
     <div class="terminal">
-        &gt; SECURITY STATUS:
-        <span class="danger">CRITICAL</span><br>
 
-        &gt; SYSTEM CONNECTION:
-        <span class="danger">COMPROMISED</span><br>
+        &gt; CONNECTION:
+        <span class="red">ACTIVE</span><br>
 
-        &gt; SECURITY PROTOCOL:
-        <span class="danger">FAILED</span><br>
+        &gt; SECURITY LEVEL:
+        <span class="red">CRITICAL</span><br>
+
+        &gt; SYSTEM STATUS:
+        <span class="red">WARNING</span><br>
 
         &gt; COUNTDOWN:
-        <span class="danger">ACTIVE</span>
+        <span class="red">RUNNING</span>
+
+    </div>
+
+    <div class="progress">
+        <div class="bar" id="bar"></div>
     </div>
 
 </div>
 
 <script>
 
-/* CÓDIGOS DO FUNDO */
+/* CÓDIGOS DESCENDO NO FUNDO */
 
-const fundo = document.getElementById("codes");
+const matrix = document.getElementById("matrix");
 
-const caracteres =
-"010101010101 SYSTEM ERROR ACCESS DENIED 010101 ERROR 404 00110011";
+const chars =
+"0101010101010101 ERROR SYSTEM ACCESS 404 00110101 WARNING";
 
-for (let i = 0; i < 22; i++) {
+for (let i = 0; i < 25; i++) {
 
-    const codigo = document.createElement("div");
+    const column = document.createElement("div");
 
-    codigo.className = "code";
+    column.className = "column";
 
-    codigo.style.left =
+    column.style.left =
         Math.random() * 100 + "%";
 
-    codigo.style.animationDuration =
+    column.style.animationDuration =
         (5 + Math.random() * 10) + "s";
 
-    codigo.style.animationDelay =
+    column.style.animationDelay =
         Math.random() * 8 + "s";
 
-    let texto = "";
+    let text = "";
 
-    for (let j = 0; j < 70; j++) {
-        texto += caracteres.charAt(
-            Math.floor(Math.random() * caracteres.length)
+    for (let j = 0; j < 80; j++) {
+
+        text += chars.charAt(
+            Math.floor(Math.random() * chars.length)
         );
 
-        if (j % 4 === 0) {
-            texto += "\n";
-        }
+        text += "\n";
     }
 
-    codigo.textContent = texto;
+    column.textContent = text;
 
-    fundo.appendChild(codigo);
+    matrix.appendChild(column);
 }
 
 
-/* CONTADOR */
+/* CONTADOR DE 20 MINUTOS */
 
-let tempo = 20 * 60;
+const total = 20 * 60;
 
-function atualizar() {
+let time = total;
 
-    let minutos = Math.floor(tempo / 60);
-    let segundos = tempo % 60;
+function updateTimer() {
+
+    const minutes = Math.floor(time / 60);
+
+    const seconds = time % 60;
 
     document.getElementById("timer").textContent =
-        String(minutos).padStart(2, "0") +
+        String(minutes).padStart(2, "0") +
         ":" +
-        String(segundos).padStart(2, "0");
+        String(seconds).padStart(2, "0");
 
-    if (tempo > 0) {
-        tempo--;
+    const percentage =
+        (time / total) * 100;
+
+    document.getElementById("bar").style.width =
+        percentage + "%";
+
+    if (time > 0) {
+        time--;
+    } else {
+        document.getElementById("timer").textContent =
+            "00:00";
     }
 }
 
-atualizar();
+updateTimer();
 
-setInterval(atualizar, 1000);
+setInterval(updateTimer, 1000);
 
 </script>
 
