@@ -1,648 +1,1804 @@
-
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>🇷🇺 ТЁМНАЯ ТРЕВОГА 🇷🇺</title>
-
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        html,
-        body {
-            margin: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            background: #000;
-            font-family: "Courier New", monospace;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Beach Radar</title>
+
+<style>
+:root {
+    --bg: #08111f;
+    --card: #101c2e;
+    --card2: #14233a;
+    --border: #263852;
+
+    --primary: #20d68a;
+    --primary-dark: #12ad6c;
+
+    --text: #f5f7fa;
+    --muted: #91a2b8;
+
+    --danger: #ef4444;
+    --warning: #f59e0b;
+    --blue: #38bdf8;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at top, #10233d 0%, var(--bg) 50%);
+    color: var(--text);
+    font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+}
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+
+    border-bottom: 1px solid var(--border);
+
+    background: rgba(8,17,31,.92);
+    backdrop-filter: blur(15px);
+}
+
+.header {
+    max-width: 900px;
+    margin: auto;
+
+    padding: 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icon {
+    width: 45px;
+    height: 45px;
+
+    border-radius: 13px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        linear-gradient(135deg, var(--primary), #12a8e8);
+
+    font-size: 24px;
+}
+
+.logo h1 {
+    font-size: 20px;
+}
+
+.logo p {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.gps {
+    display: flex;
+    align-items: center;
+    gap: 7px;
 
-        /* =========================
-           FUNDO
-        ========================= */
+    font-size: 12px;
+    color: var(--muted);
+}
 
-        #matrix {
-            position: fixed;
-            inset: 0;
-            overflow: hidden;
-            opacity: 0.28;
-            z-index: 1;
-        }
+.dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--warning);
+}
 
-        .code {
-            position: absolute;
-            top: -120%;
+.dot.active {
+    background: var(--primary);
+    box-shadow: 0 0 14px rgba(32,214,138,.8);
+}
+
+.container {
+    width: 100%;
+    max-width: 900px;
+    margin: auto;
 
-            color: #a000ff;
-            font-size: 14px;
-            line-height: 25px;
-            white-space: pre;
+    padding: 25px 16px 80px;
+}
+
+.card {
+    background: rgba(16,28,46,.95);
+    border: 1px solid var(--border);
+    border-radius: 20px;
 
-            text-shadow: 0 0 8px #a000ff;
+    padding: 22px;
+    margin-bottom: 18px;
+}
+
+.hero {
+    text-align: center;
+    padding: 30px 20px;
+}
+
+.hero-icon {
+    font-size: 55px;
+    margin-bottom: 10px;
+}
+
+.hero h2 {
+    font-size: 25px;
+    margin-bottom: 8px;
+}
+
+.hero p {
+    color: var(--muted);
+    line-height: 1.5;
+}
+
+.status {
+    margin-top: 20px;
+
+    padding: 14px;
+
+    border-radius: 13px;
+
+    background: #0b1728;
+    border: 1px solid var(--border);
+
+    color: var(--muted);
+}
+
+.status strong {
+    color: var(--text);
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
 
-            animation: fall linear infinite;
-        }
+    margin-top: 18px;
+}
 
-        @keyframes fall {
-            from {
-                transform: translateY(0);
-            }
+button {
+    border: 0;
+    cursor: pointer;
 
-            to {
-                transform: translateY(230vh);
-            }
-        }
+    padding: 13px 17px;
 
-        /* =========================
-           ESCURECIMENTO
-        ========================= */
+    border-radius: 11px;
 
-        .dark {
-            position: fixed;
-            inset: 0;
-            z-index: 2;
+    font-weight: 700;
+    font-size: 14px;
 
-            background:
-                radial-gradient(
-                    circle,
-                    transparent 5%,
-                    rgba(0,0,0,.94) 90%
-                );
-        }
+    transition: .2s;
+}
 
-        /* =========================
-           PAINEL
-        ========================= */
+button:hover {
+    transform: translateY(-1px);
+}
 
-        .panel {
-            position: absolute;
-            z-index: 5;
+.primary {
+    background: var(--primary);
+    color: #061b11;
+}
 
-            width: 88%;
-            max-width: 650px;
+.primary:hover {
+    background: var(--primary-dark);
+}
 
-            left: 50%;
-            top: 50%;
+.secondary {
+    background: var(--card2);
+    color: white;
+    border: 1px solid var(--border);
+}
 
-            transform: translate(-50%, -50%);
+.danger {
+    background: rgba(239,68,68,.1);
+    color: #ff7070;
+    border: 1px solid rgba(239,68,68,.3);
+}
 
-            padding: 20px;
+.buttons button {
+    flex: 1;
+}
 
-            text-align: center;
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 12px;
 
-            background: rgba(3,0,0,.97);
+    margin-bottom: 18px;
+}
 
-            border: 2px solid red;
+.stat {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 18px;
+}
 
-            box-shadow:
-                0 0 25px red,
-                0 0 70px rgba(255,0,0,.3);
-        }
+.stat-number {
+    color: var(--primary);
+    font-size: 27px;
+    font-weight: 800;
+}
 
-        /* =========================
-           ALERTA
-        ========================= */
+.stat-label {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 4px;
+}
 
-        .warning {
-            color: #ff2222;
+.section-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-            font-size: clamp(11px, 3vw, 18px);
+    margin-bottom: 15px;
+}
 
-            font-weight: bold;
+.section-title h2 {
+    font-size: 18px;
+}
 
-            letter-spacing: 1px;
+.player {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-            animation: blink .8s infinite;
-        }
+    gap: 15px;
 
-        @keyframes blink {
-            50% {
-                opacity: .25;
-            }
-        }
+    padding: 15px;
 
-        /* =========================
-           TÍTULO
-        ========================= */
+    background: #0b1728;
 
-        h1 {
-            margin: 12px 0 16px;
+    border: 1px solid var(--border);
 
-            color: red;
+    border-radius: 14px;
 
-            font-size: clamp(23px, 7vw, 48px);
+    margin-bottom: 10px;
+}
 
-            text-shadow:
-                0 0 10px red,
-                0 0 25px red;
-        }
+.player-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
 
-        /* =========================
-           TIMER
-        ========================= */
+.player-icon {
+    width: 43px;
+    height: 43px;
 
-        #timer {
-            display: inline-block;
+    border-radius: 12px;
 
-            padding: 4px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-            background: #000;
+    background: #162842;
 
-            border: 2px solid #00ff33;
+    font-size: 20px;
+}
 
-            color: #00ff33;
+.player-name {
+    font-weight: 700;
+}
 
-            font-size: clamp(55px, 17vw, 100px);
+.player-meta {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 4px;
+}
 
-            font-weight: bold;
+.distance {
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 13px;
+}
 
-            letter-spacing: 2px;
+.arena {
+    padding: 16px;
 
-            text-shadow:
-                0 0 12px #00ff33,
-                0 0 25px #00ff33;
+    background: #0b1728;
 
-            box-shadow:
-                0 0 20px rgba(0,255,51,.55);
-        }
+    border: 1px solid var(--border);
 
-        /* =========================
-           TERMINAL
-        ========================= */
+    border-radius: 14px;
 
-        .terminal {
-            margin-top: 16px;
+    margin-bottom: 10px;
+}
 
-            padding: 13px;
+.arena.near {
+    border-color: var(--primary);
+}
 
-            background: #010101;
+.arena-name {
+    font-weight: 700;
+}
 
-            border: 1px solid #4d0000;
+.arena-meta {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 5px;
+}
 
-            text-align: left;
+.empty {
+    text-align: center;
+    color: var(--muted);
+    padding: 25px 10px;
+}
 
-            color: #ff5555;
+.modal {
+    position: fixed;
+    inset: 0;
 
-            font-size: clamp(10px, 2.8vw, 14px);
+    z-index: 1000;
 
-            line-height: 1.8;
-        }
+    display: none;
+    align-items: center;
+    justify-content: center;
 
-        .green {
-            color: #00ff33;
-        }
+    padding: 20px;
 
-        .red {
-            color: #ff2222;
-            font-weight: bold;
-        }
+    background: rgba(0,0,0,.7);
+}
 
-        /* =========================
-           BARRA
-        ========================= */
+.modal.open {
+    display: flex;
+}
 
-        .bar {
-            width: 100%;
-            height: 7px;
+.modal-box {
+    width: 100%;
+    max-width: 430px;
 
-            margin-top: 16px;
+    background: #101c2e;
 
-            background: #102000;
-        }
+    border: 1px solid var(--border);
 
-        #progress {
-            width: 100%;
-            height: 100%;
+    border-radius: 20px;
 
-            background: #00ff33;
+    padding: 23px;
+}
 
-            box-shadow: 0 0 12px #00ff33;
+.modal-box h2 {
+    margin-bottom: 18px;
+}
 
-            transition: width 1s linear;
-        }
+label {
+    display: block;
 
-        /* =========================
-           STATUS
-        ========================= */
+    color: var(--muted);
 
-        #status {
-            margin-top: 12px;
+    font-size: 13px;
 
-            color: #ff3333;
+    margin-bottom: 7px;
+}
 
-            font-size: clamp(9px, 2.7vw, 13px);
+input,
+select {
+    width: 100%;
 
-            font-weight: bold;
-        }
+    padding: 13px;
 
-        /* =========================
-           VÍDEOS
-        ========================= */
+    margin-bottom: 15px;
 
-        .videos {
-            margin-top: 13px;
+    background: #091524;
 
-            padding-top: 10px;
+    color: white;
 
-            border-top: 1px solid #440000;
+    border: 1px solid var(--border);
 
-            color: #b000ff;
+    border-radius: 10px;
 
-            font-size: clamp(12px, 3.5vw, 17px);
+    outline: none;
+}
 
-            font-weight: bold;
+input:focus,
+select:focus {
+    border-color: var(--primary);
+}
 
-            letter-spacing: 2px;
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+}
 
-            text-shadow: 0 0 10px #b000ff;
-        }
+.modal-buttons button {
+    flex: 1;
+}
 
-        /* =========================
-           BOTÃO
-        ========================= */
+.location-box {
+    margin-top: 15px;
 
-        #fullscreenBtn {
-            margin-top: 13px;
+    padding: 14px;
 
-            padding: 8px 15px;
+    background: rgba(32,214,138,.07);
 
-            background: #050505;
+    border: 1px solid rgba(32,214,138,.2);
 
-            border: 1px solid #555;
+    border-radius: 13px;
+}
 
-            color: #aaa;
+.location-box div {
+    margin-bottom: 5px;
 
-            font-family: "Courier New", monospace;
+    color: var(--muted);
 
-            font-size: 11px;
+    font-size: 12px;
+}
 
-            cursor: pointer;
-        }
+.location-box strong {
+    color: white;
+}
 
-        /* =========================
-           GLITCH NO FINAL
-        ========================= */
+@media(max-width:600px) {
 
-        .glitch {
-            animation: shake .12s infinite;
-        }
+    .header {
+        padding: 15px;
+    }
 
-        @keyframes shake {
-            0% {
-                transform: translate(-50%, -50%);
-            }
+    .gps span {
+        display: none;
+    }
 
-            25% {
-                transform: translate(
-                    calc(-50% + 3px),
-                    calc(-50% - 2px)
-                );
-            }
+    .stats {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
 
-            50% {
-                transform: translate(
-                    calc(-50% - 3px),
-                    calc(-50% + 2px)
-                );
-            }
+    .stat {
+        padding: 13px;
+    }
 
-            75% {
-                transform: translate(
-                    calc(-50% + 2px),
-                    calc(-50% + 3px)
-                );
-            }
+    .stat-number {
+        font-size: 22px;
+    }
 
-            100% {
-                transform: translate(-50%, -50%);
-            }
-        }
-
-        /* =========================
-           TELA CONCLUÍDO
-        ========================= */
-
-        #completed {
-            position: fixed;
-            inset: 0;
-
-            z-index: 9999;
-
-            display: none;
-
-            justify-content: center;
-            align-items: center;
-
-            background: #000;
-
-            color: #00ff33;
-
-            font-family: "Courier New", monospace;
-
-            font-size: clamp(
-                55px,
-                15vw,
-                190px
-            );
-
-            font-weight: bold;
-
-            text-align: center;
-
-            text-shadow:
-                0 0 15px #00ff33,
-                0 0 35px #00ff33,
-                0 0 70px #00ff33;
-
-            animation: completedGlow 1s infinite alternate;
-        }
-
-        @keyframes completedGlow {
-            from {
-                opacity: .75;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-        /* =========================
-           TELAS PEQUENAS
-        ========================= */
-
-        @media (max-height: 650px) {
-
-            .panel {
-                padding: 10px;
-            }
-
-            h1 {
-                margin: 5px 0 8px;
-            }
-
-            .terminal {
-                margin-top: 8px;
-                line-height: 1.5;
-            }
-
-            .videos {
-                margin-top: 7px;
-            }
-        }
-    </style>
+    .buttons {
+        flex-direction: column;
+    }
+}
+</style>
 </head>
 
 <body>
 
-    <!-- FUNDO ROXO -->
-    <div id="matrix"></div>
+<header>
 
-    <!-- ESCURECIMENTO -->
-    <div class="dark"></div>
+<div class="header">
 
-    <!-- PAINEL PRINCIPAL -->
-    <div class="panel" id="panel">
+    <div class="logo">
 
-        <div class="warning">
-            🇷🇺 ⚠ СИСТЕМНОЕ ПРЕДУПРЕЖДЕНИЕ ⚠ 🇷🇺
+        <div class="logo-icon">
+            🏓
         </div>
 
-        <h1>
-            🇷🇺 ТЁМНАЯ ТРЕВОГА 🇷🇺
-        </h1>
-
-        <div id="timer">
-            05:00
+        <div>
+            <h1>Beach Radar</h1>
+            <p>Jogadores perto de você</p>
         </div>
 
-        <div class="terminal">
+    </div>
 
-            &gt; ФОРМАТИРОВАНИЕ:
-            <span class="green">АКТИВНО</span><br>
+    <div class="gps">
 
-            &gt; КОПИРОВАНИЕ ДАННЫХ:
-            <span class="green">УСПЕШНО</span><br>
+        <div id="gpsDot" class="dot"></div>
 
-            &gt; ОБРАБОТКА СИСТЕМЫ:
-            <span class="green">ЗАВЕРШЕНО</span><br>
+        <span id="gpsText">
+            GPS desligado
+        </span>
 
-            &gt; СОЕДИНЕНИЕ:
-            <span class="green">АКТИВНО</span><br>
+    </div>
 
-            &gt; СОСТОЯНИЕ:
-            <span class="red">КРИТИЧЕСКОЕ</span>
+</div>
 
-        </div>
+</header>
 
-        <div class="bar">
-            <div id="progress"></div>
-        </div>
 
-        <div id="status">
-            СОЕДИНЕНИЕ АКТИВНО...
-        </div>
+<main class="container">
 
-        <div class="videos">
-            X ВИДЕОЗАПИСЕЙ
-        </div>
 
-        <button id="fullscreenBtn">
-            ПОЛНЫЙ ЭКРАН
+<!-- STATUS -->
+
+<section class="card hero">
+
+    <div class="hero-icon">
+        📡
+    </div>
+
+    <h2 id="mainStatus">
+        Beach Radar
+    </h2>
+
+    <p id="description">
+        Ative sua localização para descobrir jogadores
+        e arenas próximas.
+    </p>
+
+    <div class="buttons">
+
+        <button
+            id="startButton"
+            class="primary"
+            onclick="startRadar()">
+
+            📍 Entrar no Radar
+
+        </button>
+
+        <button
+            id="stopButton"
+            class="danger"
+            onclick="stopRadar()"
+            style="display:none">
+
+            ⛔ Sair do Radar
+
         </button>
 
     </div>
 
-    <!-- TELA FINAL -->
-    <div id="completed">
-        ЗАВЕРШЕНО
+    <div class="location-box">
+
+        <div>
+            Latitude:
+            <strong id="latitude">---</strong>
+        </div>
+
+        <div>
+            Longitude:
+            <strong id="longitude">---</strong>
+        </div>
+
+        <div>
+            Precisão:
+            <strong id="accuracy">---</strong>
+        </div>
+
     </div>
 
+</section>
 
-    <script>
 
-        /* =========================
-           CÓDIGOS ROXOS
-        ========================= */
+<!-- ESTATÍSTICAS -->
 
-        const matrix =
-            document.getElementById("matrix");
+<section class="stats">
 
-        const chars =
-            "010101 110010 001101 101010 001100 404 ERROR";
+    <div class="stat">
 
-        for (let i = 0; i < 12; i++) {
+        <div
+            id="playersCount"
+            class="stat-number">
+            0
+        </div>
 
-            const code =
-                document.createElement("div");
+        <div class="stat-label">
+            Jogadores
+        </div>
 
-            code.className = "code";
+    </div>
 
-            code.style.left =
-                Math.random() * 100 + "%";
+    <div class="stat">
 
-            code.style.animationDuration =
-                (32 + Math.random() * 18) + "s";
+        <div
+            id="arenasCount"
+            class="stat-number">
+            0
+        </div>
 
-            code.style.animationDelay =
-                Math.random() * 15 + "s";
+        <div class="stat-label">
+            Arenas
+        </div>
 
-            let text = "";
+    </div>
 
-            for (let j = 0; j < 75; j++) {
-                text += chars + "\n";
-            }
+    <div class="stat">
 
-            code.textContent = text;
+        <div
+            id="nearCount"
+            class="stat-number">
+            0
+        </div>
 
-            matrix.appendChild(code);
+        <div class="stat-label">
+            Próximos
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- JOGADORES -->
+
+<section class="card">
+
+    <div class="section-title">
+
+        <h2>
+            🏓 Jogadores no Radar
+        </h2>
+
+    </div>
+
+    <div id="playersList">
+
+        <div class="empty">
+            Entre no radar para aparecer aqui.
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ARENAS -->
+
+<section class="card">
+
+    <div class="section-title">
+
+        <h2>
+            📍 Arenas
+        </h2>
+
+        <button
+            class="primary"
+            onclick="openArenaModal()">
+
+            + Arena
+
+        </button>
+
+    </div>
+
+    <div id="arenasList">
+
+        <div class="empty">
+            Nenhuma arena cadastrada.
+        </div>
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+<!-- MODAL ARENA -->
+
+<div
+    id="arenaModal"
+    class="modal">
+
+    <div class="modal-box">
+
+        <h2>
+            📍 Nova Arena
+        </h2>
+
+        <label>
+            Nome
+        </label>
+
+        <input
+            id="arenaName"
+            type="text"
+            placeholder="Ex: Arena Central">
+
+        <label>
+            Tipo
+        </label>
+
+        <select id="arenaType">
+
+            <option>
+                Arena
+            </option>
+
+            <option>
+                Quadra
+            </option>
+
+            <option>
+                Praia
+            </option>
+
+            <option>
+                Clube
+            </option>
+
+        </select>
+
+        <label>
+            Raio de presença (metros)
+        </label>
+
+        <input
+            id="arenaRadius"
+            type="number"
+            value="100"
+            min="20"
+            max="1000">
+
+        <div class="modal-buttons">
+
+            <button
+                class="secondary"
+                onclick="closeArenaModal()">
+
+                Cancelar
+
+            </button>
+
+            <button
+                class="primary"
+                onclick="createArena()">
+
+                Criar
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- FIREBASE -->
+
+<script type="module">
+
+import {
+    initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+import {
+    getDatabase,
+    ref,
+    set,
+    remove,
+    onValue,
+    push
+}
+from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
+
+import {
+    getAuth,
+    signInAnonymously
+}
+from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+/* =====================================================
+   COLOQUE A CONFIGURAÇÃO DO SEU FIREBASE AQUI
+===================================================== */
+
+const firebaseConfig = {
+
+    apiKey: "COLOQUE_SUA_API_KEY",
+
+    authDomain:
+        "SEU-PROJETO.firebaseapp.com",
+
+    databaseURL:
+        "https://SEU-PROJETO-default-rtdb.firebaseio.com",
+
+    projectId:
+        "SEU-PROJETO",
+
+    storageBucket:
+        "SEU-PROJETO.firebasestorage.app",
+
+    messagingSenderId:
+        "SEU_SENDER_ID",
+
+    appId:
+        "SEU_APP_ID"
+
+};
+
+
+/* =====================================================
+   FIREBASE
+===================================================== */
+
+const app =
+    initializeApp(firebaseConfig);
+
+const db =
+    getDatabase(app);
+
+const auth =
+    getAuth(app);
+
+
+/* =====================================================
+   ESTADO
+===================================================== */
+
+let currentLatitude = null;
+let currentLongitude = null;
+let currentAccuracy = null;
+
+let watchId = null;
+
+let radarActive = false;
+
+let firebaseUser = null;
+
+
+/* =====================================================
+   ID LOCAL
+===================================================== */
+
+let playerId =
+    localStorage.getItem(
+        "beachRadarPlayerId"
+    );
+
+if (!playerId) {
+
+    playerId =
+        crypto.randomUUID();
+
+    localStorage.setItem(
+        "beachRadarPlayerId",
+        playerId
+    );
+}
+
+
+/* =====================================================
+   DISTÂNCIA
+===================================================== */
+
+function distance(
+    lat1,
+    lon1,
+    lat2,
+    lon2
+) {
+
+    const R = 6371000;
+
+    const dLat =
+        (lat2 - lat1)
+        * Math.PI / 180;
+
+    const dLon =
+        (lon2 - lon1)
+        * Math.PI / 180;
+
+    const a =
+        Math.sin(dLat / 2) ** 2 +
+
+        Math.cos(
+            lat1 * Math.PI / 180
+        ) *
+
+        Math.cos(
+            lat2 * Math.PI / 180
+        ) *
+
+        Math.sin(dLon / 2) ** 2;
+
+    const c =
+        2 *
+        Math.atan2(
+            Math.sqrt(a),
+            Math.sqrt(1 - a)
+        );
+
+    return R * c;
+}
+
+
+/* =====================================================
+   AUTENTICAÇÃO
+===================================================== */
+
+async function loginFirebase() {
+
+    try {
+
+        const result =
+            await signInAnonymously(auth);
+
+        firebaseUser =
+            result.user;
+
+        console.log(
+            "Firebase conectado:",
+            firebaseUser.uid
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Não foi possível conectar ao servidor."
+        );
+
+        throw error;
+    }
+}
+
+
+/* =====================================================
+   INICIAR RADAR
+===================================================== */
+
+window.startRadar = async function() {
+
+    if (radarActive)
+        return;
+
+
+    if (!navigator.geolocation) {
+
+        alert(
+            "Este navegador não oferece localização."
+        );
+
+        return;
+    }
+
+
+    try {
+
+        await loginFirebase();
+
+    }
+
+    catch {
+
+        return;
+    }
+
+
+    navigator.geolocation.getCurrentPosition(
+
+        position => {
+
+            updateGPS(position);
+
+            radarActive = true;
+
+            document
+                .getElementById("startButton")
+                .style.display = "none";
+
+            document
+                .getElementById("stopButton")
+                .style.display = "block";
+
+            document
+                .getElementById("mainStatus")
+                .textContent =
+                "Você está no Radar 🟢";
+
+            document
+                .getElementById("description")
+                .textContent =
+                "Sua localização está sendo compartilhada enquanto o Radar estiver ativo.";
+
+            startWatching();
+
+        },
+
+        error => {
+
+            console.error(error);
+
+            alert(
+                "Permita o acesso à localização para entrar no Radar."
+            );
+
+        },
+
+        {
+            enableHighAccuracy: true,
+            timeout: 15000,
+            maximumAge: 0
         }
 
+    );
 
-        /* =========================
-           TIMER
-        ========================= */
-
-        let remaining = 5 * 60;
-
-        const timer =
-            document.getElementById("timer");
-
-        const progress =
-            document.getElementById("progress");
-
-        const panel =
-            document.getElementById("panel");
-
-        const completed =
-            document.getElementById("completed");
+};
 
 
-        function updateTimer() {
+/* =====================================================
+   WATCH GPS
+===================================================== */
 
-            const minutes =
-                Math.floor(remaining / 60);
+function startWatching() {
 
-            const seconds =
-                remaining % 60;
-
-            timer.textContent =
-                String(minutes).padStart(2, "0")
-                + ":" +
-                String(seconds).padStart(2, "0");
+    if (watchId !== null)
+        return;
 
 
-            progress.style.width =
-                (remaining / 300 * 100) + "%";
+    watchId =
+        navigator.geolocation.watchPosition(
 
+            position => {
 
-            /* ÚLTIMO MINUTO */
+                updateGPS(position);
 
-            if (
-                remaining <= 60 &&
-                remaining > 0
-            ) {
+            },
 
-                panel.classList.add("glitch");
+            error => {
+
+                console.error(
+                    "GPS:",
+                    error
+                );
+
+                setGPSStatus(
+                    false,
+                    "GPS indisponível"
+                );
+
+            },
+
+            {
+
+                enableHighAccuracy: true,
+
+                maximumAge: 3000,
+
+                timeout: 15000
 
             }
 
+        );
+}
 
-            /* CHEGOU A ZERO */
 
-            if (remaining <= 0) {
+/* =====================================================
+   ATUALIZAR GPS
+===================================================== */
 
-                clearInterval(timerInterval);
+async function updateGPS(position) {
 
-                panel.style.display = "none";
+    currentLatitude =
+        position.coords.latitude;
 
-                matrix.style.display = "none";
+    currentLongitude =
+        position.coords.longitude;
 
-                document.querySelector(".dark")
-                    .style.display = "none";
+    currentAccuracy =
+        position.coords.accuracy;
 
-                completed.style.display = "flex";
 
-                return;
-            }
+    document
+        .getElementById("latitude")
+        .textContent =
+        currentLatitude.toFixed(6);
 
-            remaining--;
+    document
+        .getElementById("longitude")
+        .textContent =
+        currentLongitude.toFixed(6);
+
+    document
+        .getElementById("accuracy")
+        .textContent =
+        Math.round(currentAccuracy)
+        + " m";
+
+
+    setGPSStatus(
+        true,
+        "GPS ativo"
+    );
+
+
+    if (radarActive && firebaseUser) {
+
+        await publishPosition();
+
+    }
+
+    renderArenas();
+
+}
+
+
+/* =====================================================
+   PUBLICAR LOCALIZAÇÃO
+===================================================== */
+
+async function publishPosition() {
+
+    if (
+        currentLatitude === null ||
+        currentLongitude === null
+    )
+        return;
+
+
+    const playerRef =
+        ref(
+            db,
+            "players/" + playerId
+        );
+
+
+    await set(
+        playerRef,
+        {
+
+            id: playerId,
+
+            latitude:
+                currentLatitude,
+
+            longitude:
+                currentLongitude,
+
+            accuracy:
+                currentAccuracy,
+
+            online: true,
+
+            updatedAt:
+                Date.now()
+
+        }
+    );
+}
+
+
+/* =====================================================
+   SAIR DO RADAR
+===================================================== */
+
+window.stopRadar = async function() {
+
+    radarActive = false;
+
+
+    if (watchId !== null) {
+
+        navigator.geolocation
+            .clearWatch(watchId);
+
+        watchId = null;
+
+    }
+
+
+    if (firebaseUser) {
+
+        try {
+
+            await remove(
+                ref(
+                    db,
+                    "players/" + playerId
+                )
+            );
+
         }
 
+        catch (error) {
 
-        updateTimer();
+            console.error(error);
 
+        }
 
-        const timerInterval =
-            setInterval(updateTimer, 1000);
-
-
-        /* =========================
-           MENSAGENS
-        ========================= */
-
-        const messages = [
-
-            "СОЕДИНЕНИЕ АКТИВНО...",
-
-            "ПРОВЕРКА СИСТЕМЫ...",
-
-            "ОБРАБОТКА ДАННЫХ...",
-
-            "ПРОТОКОЛ БЕЗОПАСНОСТИ АКТИВЕН...",
-
-            "ДОСТУП РАЗРЕШЁН...",
-
-            "СОСТОЯНИЕ: КРИТИЧЕСКОЕ..."
-
-        ];
-
-        let index = 0;
-
-        setInterval(() => {
-
-            document.getElementById("status")
-                .textContent = messages[index];
-
-            index++;
-
-            if (index >= messages.length) {
-                index = 0;
-            }
-
-        }, 2200);
+    }
 
 
-        /* =========================
-           TELA CHEIA
-        ========================= */
+    document
+        .getElementById("startButton")
+        .style.display = "block";
 
-        document
-            .getElementById("fullscreenBtn")
-            .addEventListener("click", () => {
+    document
+        .getElementById("stopButton")
+        .style.display = "none";
 
-                const page =
-                    document.documentElement;
 
-                if (page.requestFullscreen) {
+    document
+        .getElementById("mainStatus")
+        .textContent =
+        "Radar desligado";
 
-                    page.requestFullscreen()
-                        .catch(() => {});
+    document
+        .getElementById("description")
+        .textContent =
+        "Sua localização não está mais sendo compartilhada.";
 
-                }
+    setGPSStatus(
+        false,
+        "Radar desligado"
+    );
+};
 
-                document
-                    .getElementById("fullscreenBtn")
-                    .style.display = "none";
+
+/* =====================================================
+   STATUS GPS
+===================================================== */
+
+function setGPSStatus(
+    active,
+    text
+) {
+
+    const dot =
+        document.getElementById(
+            "gpsDot"
+        );
+
+    const label =
+        document.getElementById(
+            "gpsText"
+        );
+
+
+    label.textContent =
+        text;
+
+
+    if (active)
+        dot.classList.add("active");
+
+    else
+        dot.classList.remove("active");
+}
+
+
+/* =====================================================
+   JOGADORES
+===================================================== */
+
+function listenPlayers() {
+
+    const playersRef =
+        ref(db, "players");
+
+
+    onValue(
+        playersRef,
+        snapshot => {
+
+            const data =
+                snapshot.val() || {};
+
+            renderPlayers(data);
+
+        }
+    );
+}
+
+
+function renderPlayers(players) {
+
+    const list =
+        document.getElementById(
+            "playersList"
+        );
+
+
+    const now =
+        Date.now();
+
+
+    const activePlayers =
+        Object.values(players)
+            .filter(player => {
+
+                return (
+                    player.online === true &&
+
+                    now -
+                    player.updatedAt
+                    <
+                    60000
+
+                );
 
             });
 
-    </script>
+
+    document
+        .getElementById(
+            "playersCount"
+        )
+        .textContent =
+        activePlayers.length;
+
+
+    if (activePlayers.length === 0) {
+
+        list.innerHTML = `
+            <div class="empty">
+                🏓 Nenhum jogador no radar agora.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    const nearby =
+        activePlayers
+            .map(player => {
+
+                let meters = null;
+
+
+                if (
+                    currentLatitude !== null &&
+                    currentLongitude !== null
+                ) {
+
+                    meters =
+                        distance(
+
+                            currentLatitude,
+                            currentLongitude,
+
+                            player.latitude,
+                            player.longitude
+
+                        );
+
+                }
+
+
+                return {
+                    ...player,
+                    meters
+                };
+
+            })
+            .filter(player =>
+                player.id !== playerId
+            )
+            .sort((a,b) =>
+                (a.meters ?? Infinity)
+                -
+                (b.meters ?? Infinity)
+            );
+
+
+    let html = "";
+
+
+    nearby.forEach(player => {
+
+        let distanceText =
+            "Localização recebida";
+
+
+        if (player.meters !== null) {
+
+            distanceText =
+                formatDistance(
+                    player.meters
+                );
+
+        }
+
+
+        html += `
+
+            <div class="player">
+
+                <div class="player-left">
+
+                    <div class="player-icon">
+                        🏓
+                    </div>
+
+                    <div>
+
+                        <div class="player-name">
+                            Jogador
+                        </div>
+
+                        <div class="player-meta">
+                            Atualizado agora
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="distance">
+                    ${distanceText}
+                </div>
+
+            </div>
+
+        `;
+
+    });
+
+
+    if (!html) {
+
+        html = `
+            <div class="empty">
+                🏓 Você é o único jogador visível.
+            </div>
+        `;
+
+    }
+
+
+    list.innerHTML =
+        html;
+}
+
+
+/* =====================================================
+   ARENAS
+===================================================== */
+
+window.openArenaModal = function() {
+
+    if (
+        currentLatitude === null ||
+        currentLongitude === null
+    ) {
+
+        alert(
+            "Entre no Radar primeiro para usar sua localização."
+        );
+
+        return;
+    }
+
+
+    document
+        .getElementById("arenaModal")
+        .classList
+        .add("open");
+
+};
+
+
+window.closeArenaModal = function() {
+
+    document
+        .getElementById("arenaModal")
+        .classList
+        .remove("open");
+
+};
+
+
+window.createArena = async function() {
+
+    if (
+        currentLatitude === null ||
+        currentLongitude === null
+    ) {
+
+        alert(
+            "Sua localização ainda não está disponível."
+        );
+
+        return;
+    }
+
+
+    const name =
+        document
+            .getElementById("arenaName")
+            .value
+            .trim();
+
+
+    const type =
+        document
+            .getElementById("arenaType")
+            .value;
+
+
+    const radius =
+        Number(
+            document
+                .getElementById("arenaRadius")
+                .value
+        );
+
+
+    if (!name) {
+
+        alert(
+            "Digite o nome da arena."
+        );
+
+        return;
+    }
+
+
+    if (
+        radius < 20 ||
+        radius > 1000
+    ) {
+
+        alert(
+            "O raio precisa estar entre 20 e 1000 metros."
+        );
+
+        return;
+    }
+
+
+    const arenaRef =
+        push(
+            ref(db, "arenas")
+        );
+
+
+    await set(
+        arenaRef,
+        {
+
+            id: arenaRef.key,
+
+            name: name,
+
+            type: type,
+
+            radius: radius,
+
+            latitude:
+                currentLatitude,
+
+            longitude:
+                currentLongitude,
+
+            createdAt:
+                Date.now()
+
+        }
+    );
+
+
+    document
+        .getElementById("arenaName")
+        .value = "";
+
+
+    closeArenaModal();
+
+};
+
+
+/* =====================================================
+   ESCUTAR ARENAS
+===================================================== */
+
+function listenArenas() {
+
+    const arenasRef =
+        ref(db, "arenas");
+
+
+    onValue(
+        arenasRef,
+        snapshot => {
+
+            const arenas =
+                snapshot.val() || {};
+
+            window.currentArenas =
+                Object.values(arenas);
+
+            renderArenas();
+
+        }
+    );
+
+}
+
+
+window.currentArenas = [];
+
+
+function renderArenas() {
+
+    const list =
+        document.getElementById(
+            "arenasList"
+        );
+
+
+    const arenas =
+        window.currentArenas;
+
+
+    document
+        .getElementById(
+            "arenasCount"
+        )
+        .textContent =
+        arenas.length;
+
+
+    if (arenas.length === 0) {
+
+        list.innerHTML = `
+            <div class="empty">
+                📍 Nenhuma arena cadastrada.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    let nearbyCount = 0;
+
+    let html = "";
+
+
+    arenas.forEach(arena => {
+
+        let meters = null;
+
+        let near = false;
+
+
+        if (
+            currentLatitude !== null &&
+            currentLongitude !== null
+        ) {
+
+            meters =
+                distance(
+
+                    currentLatitude,
+                    currentLongitude,
+
+                    arena.latitude,
+                    arena.longitude
+
+                );
+
+
+            if (
+                meters <= arena.radius
+            ) {
+
+                near = true;
+
+                nearbyCount++;
+
+            }
+
+        }
+
+
+        html += `
+
+            <div class="arena ${near ? "near" : ""}">
+
+                <div class="arena-name">
+
+                    ${escapeHTML(arena.name)}
+
+                </div>
+
+                <div class="arena-meta">
+
+                    ${escapeHTML(arena.type)}
+
+                    • Raio ${arena.radius} m
+
+                    ${
+                        meters !== null
+                        ? " • " +
+                          formatDistance(meters)
+                        : ""
+                    }
+
+                    ${
+                        near
+                        ? " • 🟢 VOCÊ ESTÁ AQUI"
+                        : ""
+                    }
+
+                </div>
+
+            </div>
+
+        `;
+
+    });
+
+
+    document
+        .getElementById(
+            "nearCount"
+        )
+        .textContent =
+        nearbyCount;
+
+
+    list.innerHTML =
+        html;
+}
+
+
+/* =====================================================
+   FORMATAÇÃO
+===================================================== */
+
+function formatDistance(meters) {
+
+    if (meters < 1000) {
+
+        return (
+            Math.round(meters)
+            + " m"
+        );
+
+    }
+
+    return (
+        (meters / 1000)
+            .toFixed(1)
+        + " km"
+    );
+}
+
+
+function escapeHTML(text) {
+
+    return String(text)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
+
+
+/* =====================================================
+   INICIAR
+===================================================== */
+
+listenPlayers();
+
+listenArenas();
+
+</script>
 
 </body>
 </html>
