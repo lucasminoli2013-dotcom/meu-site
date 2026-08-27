@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="ru">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>SECURITY ALERT</title>
+<title>🇷🇺 Системное предупреждение</title>
 
 <style>
 * {
@@ -13,39 +13,32 @@
 
 body {
     margin: 0;
-    width: 100vw;
     height: 100vh;
     overflow: hidden;
     background: #000;
     font-family: "Courier New", monospace;
 }
 
-/* FUNDO VERDE */
-#fundo {
+/* NÚMEROS DO FUNDO — ROXO */
+#matrix {
     position: fixed;
     inset: 0;
     overflow: hidden;
-    z-index: 1;
+    opacity: .38;
 }
 
-.codigo {
+.code {
     position: absolute;
     top: -120%;
-
-    color: #00ff00;
-    font-size: 24px;
-    font-weight: bold;
-    line-height: 30px;
-
-    text-shadow: 0 0 7px #00ff00;
-
+    color: #b000ff;
+    font-size: 17px;
+    line-height: 25px;
     white-space: pre;
-
-    /* VELOCIDADE NORMAL */
-    animation: queda 14s linear infinite;
+    text-shadow: 0 0 8px #b000ff;
+    animation: fall linear infinite;
 }
 
-@keyframes queda {
+@keyframes fall {
     from {
         transform: translateY(0);
     }
@@ -55,272 +48,313 @@ body {
     }
 }
 
+/* ESCURECIMENTO */
+.dark {
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    background: radial-gradient(
+        circle,
+        transparent 10%,
+        rgba(0,0,0,.92) 100%
+    );
+}
+
 /* PAINEL */
-.painel {
+.panel {
     position: absolute;
-    z-index: 10;
+    z-index: 5;
+
+    width: 92%;
+    max-width: 720px;
 
     left: 50%;
     top: 50%;
 
     transform: translate(-50%, -50%);
 
-    width: 90%;
-    max-width: 850px;
+    padding: 22px 16px;
 
-    padding: 35px;
+    background: rgba(4,0,0,.97);
 
-    background: rgba(0, 0, 0, 0.97);
-
-    border: 2px solid #ff0000;
+    border: 2px solid red;
 
     box-shadow:
-        0 0 25px #ff0000,
-        0 0 70px rgba(255, 0, 0, 0.35);
+        0 0 25px red,
+        0 0 70px rgba(255,0,0,.3);
 
     text-align: center;
 }
 
+/* ALERTA */
+.warning {
+    color: red;
+    font-size: clamp(13px, 4vw, 19px);
+    font-weight: bold;
+    letter-spacing: 2px;
+    animation: blink .8s infinite;
+}
+
+@keyframes blink {
+    50% {
+        opacity: .3;
+    }
+}
+
 /* TÍTULO */
 h1 {
-    margin: 0;
+    margin: 12px 0;
 
-    color: #ff0000;
+    color: red;
 
-    font-size: clamp(35px, 7vw, 65px);
+    font-size: clamp(28px, 8vw, 55px);
 
     text-shadow:
-        0 0 10px #ff0000,
-        0 0 30px #ff0000;
-
-    animation: glitch 0.8s infinite;
+        0 0 10px red,
+        0 0 30px red;
 }
 
-@keyframes glitch {
-    0%, 100% {
-        transform: translate(0);
-    }
-
-    25% {
-        transform: translate(-3px, 1px);
-    }
-
-    50% {
-        transform: translate(3px, -1px);
-    }
-
-    75% {
-        transform: translate(-1px, 2px);
-    }
-}
-
-.subtitulo {
-    margin-top: 15px;
-
-    color: #ff4444;
-
-    font-size: 18px;
-
-    letter-spacing: 3px;
-}
-
-/* TIMER */
+/* TIMER — VERDE */
 #timer {
     display: inline-block;
 
-    margin: 30px 0;
-    padding: 8px 25px;
+    color: #00ff33;
 
-    color: #ff0000;
     background: #000;
 
-    border: 2px solid #ff0000;
+    border: 2px solid #00ff33;
 
-    font-size: clamp(70px, 15vw, 120px);
+    padding: 3px 14px;
+
+    font-size: clamp(65px, 18vw, 115px);
 
     font-weight: bold;
 
-    text-shadow: 0 0 30px #ff0000;
+    text-shadow: 0 0 25px #00ff33;
 
-    box-shadow: 0 0 25px rgba(255, 0, 0, 0.5);
+    box-shadow:
+        0 0 20px rgba(0,255,51,.6);
 }
 
 /* TERMINAL */
 .terminal {
-    padding: 20px;
+    margin-top: 17px;
 
-    text-align: left;
+    padding: 14px;
 
-    background: #030000;
+    background: #010101;
 
     border: 1px solid #550000;
 
-    color: #ff5555;
+    text-align: left;
 
-    line-height: 1.8;
+    color: #ff4444;
+
+    font-size: 13px;
+
+    line-height: 1.9;
 }
 
-.vermelho {
-    color: #ff0000;
+.green {
+    color: #00ff33;
+}
+
+.red {
+    color: red;
     font-weight: bold;
 }
 
-.verde {
-    color: #00ff00;
-    font-weight: bold;
+/* BARRA VERDE */
+.bar {
+    height: 8px;
+
+    margin-top: 17px;
+
+    background: #102500;
 }
 
-/* BARRA */
-.barra {
-    height: 10px;
-
-    margin-top: 20px;
-
-    background: #250000;
-}
-
-#progresso {
+#progress {
     width: 100%;
+
     height: 100%;
 
-    background: #ff0000;
+    background: #00ff33;
 
-    box-shadow: 0 0 15px #ff0000;
+    box-shadow: 0 0 12px #00ff33;
 
     transition: width 1s linear;
+}
+
+/* STATUS */
+#status {
+    margin-top: 12px;
+
+    color: red;
+
+    font-size: 13px;
+
+    font-weight: bold;
+}
+
+/* X VÍDEOS */
+.videos {
+    margin-top: 16px;
+
+    padding-top: 12px;
+
+    border-top: 1px solid #550000;
+
+    color: #b000ff;
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    letter-spacing: 3px;
+
+    text-shadow: 0 0 10px #b000ff;
 }
 </style>
 </head>
 
 <body>
 
-<!-- CÓDIGOS DO FUNDO -->
-<div id="fundo"></div>
+<div id="matrix"></div>
 
-<!-- PAINEL -->
-<div class="painel">
+<div class="dark"></div>
 
-    <h1>⚠ SYSTEM ALERT ⚠</h1>
+<div class="panel">
 
-    <div class="subtitulo">
-        UNAUTHORIZED ACCESS DETECTED
+    <div class="warning">
+        🇷🇺 ⚠ СИСТЕМА УСПЕШНО ВЗЛОМАНА ⚠ 🇷🇺
     </div>
 
-    <!-- 20 MINUTOS -->
-    <div id="timer">20:00</div>
+    <h1>🇷🇺 ДОСТУП РАЗРЕШЁН 🇷🇺</h1>
+
+    <div id="timer">05:00</div>
 
     <div class="terminal">
 
-        &gt; SYSTEM STATUS:
-        <span class="vermelho">CRITICAL</span><br>
+        &gt; ФОРМАТИРОВАНИЕ УСТРОЙСТВА:
+        <span class="green">05:00</span><br>
 
-        &gt; SECURITY LEVEL:
-        <span class="vermelho">DANGER</span><br>
+        &gt; КОПИРОВАНИЕ ДАННЫХ:
+        <span class="green">УСПЕШНО</span><br>
 
-        &gt; UNKNOWN USER:
-        <span class="verde">IDIOT</span><br>
+        &gt; ВЗЛОМ:
+        <span class="green">УСПЕШНО</span><br>
 
-        &gt; CONNECTION:
-        <span class="verde">ACTIVE</span><br>
+        &gt; МЕСТОПОЛОЖЕНИЕ:
+        <span class="green">УСПЕШНО</span><br>
 
-        &gt; COUNTDOWN:
-        <span class="vermelho">RUNNING</span>
+        &gt; СОСТОЯНИЕ СИСТЕМЫ:
+        <span class="red">КРИТИЧЕСКОЕ</span>
 
     </div>
 
-    <div class="barra">
-        <div id="progresso"></div>
+    <div class="bar">
+        <div id="progress"></div>
+    </div>
+
+    <div id="status">
+        ПРОЦЕСС ИНИЦИАЛИЗИРУЕТСЯ...
+    </div>
+
+    <div class="videos">
+        X ВИДЕО
     </div>
 
 </div>
 
 <script>
 
-/* =========================
-   CÓDIGOS DO FUNDO
-   ========================= */
+/* NÚMEROS ROXOS NO FUNDO */
 
-const fundo = document.getElementById("fundo");
+const matrix = document.getElementById("matrix");
 
-const caracteres =
-"010101 110010 001101 101010 010011 ERROR 404 SYSTEM";
+const chars =
+"010101 110010 001101 101010 001100 ОШИБКА 404";
 
-for (let i = 0; i < 16; i++) {
+for (let i = 0; i < 15; i++) {
 
-    const codigo = document.createElement("div");
+    const code = document.createElement("div");
 
-    codigo.className = "codigo";
+    code.className = "code";
 
-    codigo.style.left =
+    code.style.left =
         Math.random() * 100 + "%";
 
-    /* VELOCIDADES LEVEMENTE DIFERENTES */
-    codigo.style.animationDuration =
-        (12 + Math.random() * 6) + "s";
+    code.style.animationDuration =
+        (13 + Math.random() * 6) + "s";
 
-    codigo.style.animationDelay =
-        Math.random() * 10 + "s";
+    code.style.animationDelay =
+        Math.random() * 8 + "s";
 
-    let texto = "";
+    let text = "";
 
-    for (let j = 0; j < 65; j++) {
-        texto += caracteres + "\n";
+    for (let j = 0; j < 80; j++) {
+        text += chars + "\n";
     }
 
-    codigo.textContent = texto;
+    code.textContent = text;
 
-    fundo.appendChild(codigo);
+    matrix.appendChild(code);
 }
 
 
-/* =========================
-   TIMER 20 MINUTOS
-   VELOCIDADE 2×
-   ========================= */
+/* TIMER DE 5 MINUTOS */
 
-const tempoTotal = 20 * 60;
+let remaining = 5 * 60;
 
-let tempo = tempoTotal;
+const timer = document.getElementById("timer");
 
-const timer =
-    document.getElementById("timer");
+const progress = document.getElementById("progress");
 
-const progresso =
-    document.getElementById("progresso");
+function updateTimer() {
 
+    const minutes = Math.floor(remaining / 60);
 
-function atualizarTimer() {
-
-    const minutos =
-        Math.floor(tempo / 60);
-
-    const segundos =
-        tempo % 60;
+    const seconds = remaining % 60;
 
     timer.textContent =
-        String(minutos).padStart(2, "0") +
+        String(minutes).padStart(2, "0") +
         ":" +
-        String(segundos).padStart(2, "0");
+        String(seconds).padStart(2, "0");
 
+    progress.style.width =
+        (remaining / (5 * 60) * 100) + "%";
 
-    const porcentagem =
-        (tempo / tempoTotal) * 100;
-
-    progresso.style.width =
-        porcentagem + "%";
-
-
-    /* 2× */
-    if (tempo > 0) {
-        tempo -= 2;
+    if (remaining > 0) {
+        remaining--;
     }
 }
 
+updateTimer();
 
-/* COMEÇA EM 20:00 */
-atualizarTimer();
+setInterval(updateTimer, 1000);
 
-setInterval(atualizarTimer, 1000);
+
+/* MENSAGENS */
+
+const messages = [
+    "ПРОЦЕСС ИНИЦИАЛИЗИРУЕТСЯ...",
+    "ПРОТОКОЛ БЕЗОПАСНОСТИ АКТИВЕН...",
+    "ОБРАБОТКА ДАННЫХ...",
+    "СОЕДИНЕНИЕ АКТИВНО...",
+    "ДОСТУП РАЗРЕШЁН...",
+    "СОСТОЯНИЕ СИСТЕМЫ: КРИТИЧЕСКОЕ..."
+];
+
+let index = 0;
+
+setInterval(() => {
+
+    document.getElementById("status").textContent =
+        messages[index];
+
+    index = (index + 1) % messages.length;
+
+}, 1800);
 
 </script>
 
